@@ -37,47 +37,94 @@ Goals
 - Send data/video back to driver’s station
 
 ### Today's activity
-- Today we will drive a motor
-- Deploy code to Rio, open Driver’s Station
-- Auto chooser in SmartDashboard (what else might we show here?)
+- Power a motor
+- Deploy code to Rio, control using FRC Driver’s Station
+- Auto chooser in SmartDashboard
 - Poke around, learn the tools
 
-- Identify the motor in code
+1. Identify the motor in code
+We often use CanSparkMax motor controllers so we will set one up now.
 
+Robot.java (at the top where the other imports are)
 ```java
-	import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+    import com.revrobotics.CANSparkMax;
+    import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 ```
 
-- Why is it red and underlined?
+- This shows up as red & underlined because it is an error. VSCode is letting you know something is wrong.
+- The problem is that you referenced code libraries (com.revrobotics) that don't exist
 
-WPI>Manage Vendor Deps, Install new libraries online
-https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
+2. Import necessary libraries
 
-In class definition:
-private CANSparkMax motor1;
+- WPI>Manage Vendor Deps>Install new libraries (online)
+- Paste in this url to install the library: https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
 
+Robot.init
 ```java
-// robot.init:
-motor1 = new CANSparkMax(4, MotorType.kBrushless);
+public class Robot extends TimedRobot {
+    ...
+    private CANSparkMax motor1;
+    ...
+    public void robotInit() {
+    	...
+        motor1 = new CANSparkMax(4, MotorType.kBrushless);
+    }
+    ...
+    
+    public void autonomousPeriodic() {
+      switch (m_autoSelected) {
+        case kCustomAuto:
+          // Put custom auto code here
+          break;
+        case kDefaultAuto:
+        default:
+          // Put default auto code here
+	  motor1.go(.3);  // <-- this tells your new motor to run at 30%
+          break;
+      }
+    }
+}
 ```
 
-In auto chooser:
-	motor1.set(.3);
+3. Deploy and test
+- If it didn’t work try to determine what is wrong.
+- One thing that could be a problem is the ID of the motor controller
 
-Deploy and test
-Didn’t work? What is wrong?
-Go back through code -- did we miss something?
+### ID the CANSparkMax
+- Connect to a CANSparkMax motor controller using a USB-C cable
+- On the laptop open RevSparkMax Client tool. Connect and set the ID to 4 (the same as we specified in the code)
+- Re-deploy and test
 
-Connect to Spark Max
-Open Rev tool to ID motor
-Re-deploy and test
+4. Rewrite code we don't like
+- There is a switch/case for the autonomousPeriodic that is complex
+- Let's rewrite it as a simple if/then
 
-Discuss switch/case, change to if/then. Which one is right?
+Robot.init
+```java
+    public void autonomousPeriodic() {
+      if (m_autoSelected == kCustomAuto) {
+          // Put custom auto code here
+      else if (m_autoSelected == kDefaultAuto) {
+          // Put default auto code here
+	  motor1.go(.3);  // <-- this tells your new motor to run at 30%
+      }
+    }
+```
+- Both ways work and do the same thing, but one is a bit more readable
 
-Hard to program by committee. 
-Need way to stay organized, know who made which changes etc.
-We use git and the website github to store our code
+### Save your code
+- Programming with a team can be difficult. One person's changes may not match with another's.
+- We need way to stay organized, know who made which changes etc.
+- To do this we use git and the website github.com to store our code
 
-In VSCode, initialize the repository and commit all files
-In GitHub Desktop > Add Local Repository then publish to GitHub
+1. In VSCode click the version control icon in the left navigation (three circles with some lines connecting them)
+2. Initialize your repository and commit your changes with a brief message like "initial commit" (you might be prompted to save and/or stage your changes)
+3. Committing confirms that you are happy with your changes, but they are only saved locally
+4. To share your changes you must Push them to GitHub
+5. On the laptop open the GitHub Desktop program
+- File>Add local repository
+- Navigate to the folder where your project lives: C:\Users\fearXX\git\Programming101\
+- Repository>Push changes
+- You might need to create a GitHub account to push your changes.
+- After pushing your code is available to share with the world
+- Go ahead and delete this project from the computer to clean up. The code can always be refetched from GitHub.
