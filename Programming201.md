@@ -183,6 +183,8 @@ public class ExampleCommand extends CommandBase {
 - You have to research and code a new command that will use a button to activate the motor
 - It needs to happen during Teleop
 
+11. Make sure you commit and push your changes to a repository!
+We will be using this ExampleSubsystem in our next class.
 
 ### Example using Xbox buttons
 Note: copied from ExampleCommand.java and renamed. Comments removed.
