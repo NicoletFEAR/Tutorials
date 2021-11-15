@@ -49,6 +49,155 @@ The D variable sees how quickly we are approaching the setpoint and applies a br
 ### PID in practice
 - There are lots of PID libraries out there. These are provided by WPILib and by the manufacturers of the motor controllers.
 - So PID for us isn't so much math as it is tuning and setting variables correctly
+
+
+### Understanding your mechanisms
+- RevRobotics offers a lot of example code to checkout. See the entry in Resources below.
+- This is a great example because it allows us to collect data about PID through testing.
+
+1. WPILib>Create a New Project
+- Template>java>Timed Robot
+- Base folder: C:\Users\fearXX\git
+- Name: PIDtesting
+- Team: 4786
+
+2. WPILib>Manage Vendor Libraries>Install new libraries (online)
+https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
+
+3. Update the Robot.java file with this example taken from 
+
+Robot.java
+```java
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot;
+
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+public class Robot extends TimedRobot {
+  private static final int deviceID = 4;
+  private CANSparkMax m_motor;
+  private CANPIDController m_pidController;
+  private CANEncoder m_encoder;
+  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+
+  @Override
+  public void robotInit() {
+    // initialize motor
+    m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
+
+    /**
+     * The restoreFactoryDefaults method can be used to reset the configuration parameters
+     * in the SPARK MAX to their factory default state. If no argument is passed, these
+     * parameters will not persist between power cycles
+     */
+    m_motor.restoreFactoryDefaults();
+
+    /**
+     * In order to use PID functionality for a controller, a CANPIDController object
+     * is constructed by calling the getPIDController() method on an existing
+     * CANSparkMax object
+     */
+    m_pidController = m_motor.getPIDController();
+
+    // Encoder object created to display position values
+    m_encoder = m_motor.getEncoder();
+
+    // PID coefficients
+    kP = 0.1; 
+    kI = 1e-4;
+    kD = 1; 
+    kIz = 0; 
+    kFF = 0; 
+    kMaxOutput = 1; 
+    kMinOutput = -1;
+
+    // set PID coefficients
+    m_pidController.setP(kP);
+    m_pidController.setI(kI);
+    m_pidController.setD(kD);
+    m_pidController.setIZone(kIz);
+    m_pidController.setFF(kFF);
+    m_pidController.setOutputRange(kMinOutput, kMaxOutput);
+
+    // display PID coefficients on SmartDashboard
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
+    SmartDashboard.putNumber("I Zone", kIz);
+    SmartDashboard.putNumber("Feed Forward", kFF);
+    SmartDashboard.putNumber("Max Output", kMaxOutput);
+    SmartDashboard.putNumber("Min Output", kMinOutput);
+    SmartDashboard.putNumber("Set Rotations", 0);
+  }
+
+  @Override
+  public void teleopPeriodic() {
+    // read PID coefficients from SmartDashboard
+    double p = SmartDashboard.getNumber("P Gain", 0);
+    double i = SmartDashboard.getNumber("I Gain", 0);
+    double d = SmartDashboard.getNumber("D Gain", 0);
+    double iz = SmartDashboard.getNumber("I Zone", 0);
+    double ff = SmartDashboard.getNumber("Feed Forward", 0);
+    double max = SmartDashboard.getNumber("Max Output", 0);
+    double min = SmartDashboard.getNumber("Min Output", 0);
+    double rotations = SmartDashboard.getNumber("Set Rotations", 0);
+
+    // if PID coefficients on SmartDashboard have changed, write new values to controller
+    if((p != kP)) { m_pidController.setP(p); kP = p; }
+    if((i != kI)) { m_pidController.setI(i); kI = i; }
+    if((d != kD)) { m_pidController.setD(d); kD = d; }
+    if((iz != kIz)) { m_pidController.setIZone(iz); kIz = iz; }
+    if((ff != kFF)) { m_pidController.setFF(ff); kFF = ff; }
+    if((max != kMaxOutput) || (min != kMinOutput)) { 
+      m_pidController.setOutputRange(min, max); 
+      kMinOutput = min; kMaxOutput = max; 
+    }
+
+    /**
+     * PIDController objects are commanded to a set point using the 
+     * SetReference() method.
+     * 
+     * The first parameter is the value of the set point, whose units vary
+     * depending on the control type set in the second parameter.
+     * 
+     * The second parameter is the control type can be set to one of four 
+     * parameters:
+     *  com.revrobotics.ControlType.kDutyCycle
+     *  com.revrobotics.ControlType.kPosition
+     *  com.revrobotics.ControlType.kVelocity
+     *  com.revrobotics.ControlType.kVoltage
+     */
+    m_pidController.setReference(rotations, ControlType.kPosition);
+    
+    SmartDashboard.putNumber("SetPoint", rotations);
+    SmartDashboard.putNumber("ProcessVariable", m_encoder.getPosition());
+  }
+}
+```
+
+4. Deploy the code to a test bench
+- Make sure the motorID in code matches the one on your controller
+- Set SmartDashboard "View>editable" and move the variables around so you can see them. Turn editable back off before Enabling.
+- Adjust the variables in SmartDashboard to see how the PID is working.
+- Generally the process is to set the P value first, then I, then D. 
+- See if you can find variables that allow you to do 4 rotations and arrive at the desired location each time.
+- Hint: running at 100% power might be a lot for 4 rotations
+
+
+### Implementing PID in Commands
 - Here is an example you can use to test a single motor and see how PID behaves
 - We will use our newfound skills developing Subsystems to alter our existing ExampleSubsystem from Programming 201 to use PID
 
@@ -158,10 +307,25 @@ RobotContainer.java
   ...
 ```
 
+5. Deploy your code and see how it behaves
+- Do the other buttons still work?
+- How does their behavior affect the PID commands?
+- How could you compensate for the effect?
+
+### Conclusion
+- PID is relatively simple to implement, but challenging to get right
+You should already have a pretty good idea what you are doing before implementing Commands etc.
+
 
 
 ### Resources
-- WPILib PID libraries: https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html
-- Rev Robotics libraries: https://github.com/REVrobotics/SPARK-MAX-Examples
+- WPILib PID libraries: 
+https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html
+There are simple-to-follow examples here that should work on any controller.
+
+- Rev Robotics has a git repository that you can clone and try out their different PID models
+https://github.com/REVrobotics/SPARK-MAX-Examples
+Git clone the project then open any of the folders in the java directory in VSCode.
+Each should be ready to deploy and provide an initial approach to different problems
 
 
