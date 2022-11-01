@@ -26,7 +26,7 @@ Goals
 - Robot.java is where the action begins
 - Control+Click TimedRobot and appreciate how much is already done for you
 - Understand that code is just a tool. You have to learn to use the tool and this is a complicated tool that takes time to understand
-- Java is strongly typed. Ceremony around defining variables
+- Java is strongly typed. Ceremony around defining variables; we have to declare what type each variable is
 - Object-oriented so we organize around objects
 
 ### Understanding what robots do
