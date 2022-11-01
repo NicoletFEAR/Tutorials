@@ -1,7 +1,8 @@
 # Programming 101
 
 Goals
-- basic understanding of the programming an FRC robot and comfort reading code
+- basic understanding of programming an FRC robot
+- comfort reading code
 
 ### Understand parts of robot
 - Battery - 12V motorcycle battery
