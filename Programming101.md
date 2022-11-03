@@ -34,7 +34,7 @@ Goals
 - What should the robot do? What can it do? [ROTATE]
 - Turn motors on/off
 - Read sensors
-- Control solenoids
+- Control solenoids (pistons)
 - Send data/video back to driver’s station
 
 ### Today's activity
@@ -64,7 +64,7 @@ Robot.init
 ```java
 public class Robot extends TimedRobot {
     ...
-    private CANSparkMax motor1;
+    private final CANSparkMax motor1;
     ...
     public void robotInit() {
     	...
@@ -98,7 +98,7 @@ public class Robot extends TimedRobot {
 
 4. Rewrite code we don't like
 - There is a switch/case for the autonomousPeriodic that is complex
-- Let's rewrite it as a simple if/then
+- Let's rewrite it as a simple if/else statement
 
 Robot.init
 ```java
