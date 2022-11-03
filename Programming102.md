@@ -48,7 +48,7 @@ Add in your new XboxController
 ```java
 public class Robot extends TimedRobot {
   ...
-  private XboxController xbox0;
+  private final static XboxController xbox0;
   ...
 }
 
@@ -66,7 +66,7 @@ In this case we need to import the XboxController package.
 Use CTRL+. and it will suggest an import.
 This should add this line near the top of the file.
 ```java
-import edu.wpi.first.wpilibj.XboxController;)
+import edu.wpi.first.wpilibj.XboxController;
 ```
 
 
