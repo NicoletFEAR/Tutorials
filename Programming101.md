@@ -1,16 +1,13 @@
 # Programming 101
 
-Goals
+### Goals
 - basic understanding of programming an FRC robot
 - comfort reading code
 
 ### Understand parts of robot
-- Battery - 12V motorcycle battery
-- Breaker - safely disconnect power from all devices
-- PDP (Power Distribution Panel) - directs power to all devices
+- RoboRIO - onboard computer. It runs code that we write and tells devices how to behave
 - Motor Controller - dictates when to send voltage to motor
 - Electric Motor - many different types are available
-- RoboRIO - onboard computer. It runs code that we write and tells devices how to behave
 - CAN wiring - nervous system for hardware that identifies devices and communicates with them
 - Laptop
 - VSCode - programming IDE, gives hints about writing code correctly
@@ -18,28 +15,48 @@ Goals
 - WPILib - FRC libraries to make it easy to work with devices
 
 ### Getting acquainted with WPILib
-- Click on WPI Logo - New project Template>java>Timed Robot
-- Choose git folder at C:\Users\fearXX\git
-- Name: Programming101
+- Open VSCode
+- Click on WPI Logo (upper right) to open a menu
+	- Create a New project
+	- Select a project type > Template > Java > Timed Robot
+	- Select a new project folder: "C:\Users\fearXX\git
+	- Project Name: "Programming 101"
+	- Team Number: 4786
+- You should see a project on the left side
+- Navigate into src/main/java/frc/robot
 - Start exploring
-- Robot code is in: src/main/java/frc/robot
 - Robot.java is where the action begins
-- Control+Click TimedRobot and appreciate how much is already done for you
-- Understand that code is just a tool. You have to learn to use the tool and this is a complicated tool that takes time to understand
-- Java is strongly typed. Ceremony around defining variables; we have to declare what type each variable is
-- Object-oriented so we organize around objects
+- Control+Click TimedRobot to open the library that is behind our project and appreciate how much is already done for you
+- Code is just a tool. You have to learn to use the tool and this can a complicated tool that takes time to understand
+- Java notes
+	- Java is "strongly typed", this means that we have to declare what "type" each variable is (String, Double, Boolean)
+	- Every statement must end in a semi-colon. That is how Java knows when you have completed your thought.
+	- Variables can have qualifiers (final = won't change, static = same everywhere, public = available everywhere, private = only available to it's parent class) 
+```java
+private String my_variable = "Hello"; // You can put comments in to explain yourself
+public Double rampRate = 4.6;  // Comments get ignored by Java so they don't need semicolons
+private final CANSparkMax motor1;  // Create a variable that will be a reference to an electric motor
+
+```
 
 ### Understanding what robots do
-- Discuss init, periodic -- how code runs on Rio
-- What should the robot do? What can it do? [ROTATE]
-- Turn motors on/off
-- Read sensors
-- Control solenoids (pistons)
-- Send data/video back to driver’s station
+- Looking at the Robot.java file
+	- robotInit - code that runs once, when the robot starts
+	- robotPeriodic - code that runs every 20ms (50 times a second), when the robot is Enabled
+	- autonomousInit - code that runs once, when Autonomous mode begins
+	- autonomousPeriodic - code that runs every 20ms, while the robot is Enabled in Autonomous Mode
+	- teleopInit - code that runs once, when the Teleop (Driver controlled) mode begins
+	- teleopPeriodic - code that runs every 20ms, while the robot is Enabled in Teleop Mode
+- What can we do with programming on a robot?
+	- Control motors -- turn them on/off or adjust speed by specifying an amount of power (voltage)
+	- Control solenoids -- make a pistons go out or in
+	- Read sensors -- encoders tell us how many times a motor has turned, ultrasonic tell us how far we are from something solid
+	- Send data/video back to driver’s station
+	- Read data from a camera to find targets and judge distance from targets
 
 ### Today's activity
 - Power a motor
-- Deploy code to Rio, control using FRC Driver’s Station
+- Deploy code to RoboRio, control using FRC Driver’s Station
 - Auto chooser in SmartDashboard
 - Poke around, learn the tools
 
@@ -60,6 +77,8 @@ Robot.java (at the top where the other imports are)
 - WPI>Manage Vendor Deps>Install new libraries (online)
 - Paste in this url to install the library: https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
 
+3. Set up and use a motor
+
 Robot.init
 ```java
 public class Robot extends TimedRobot {
@@ -68,7 +87,7 @@ public class Robot extends TimedRobot {
     ...
     public void robotInit() {
     	...
-        motor1 = new CANSparkMax(4, MotorType.kBrushless);
+        motor1 = new CANSparkMax(4, MotorType.kBrushless);  // <-- 4 means the ID of the motor controller
     }
     ...
     
@@ -76,56 +95,72 @@ public class Robot extends TimedRobot {
       switch (m_autoSelected) {
         case kCustomAuto:
           // Put custom auto code here
+	  motor1.go(.3);  // <-- this tells your new motor to run at 30%
           break;
         case kDefaultAuto:
         default:
           // Put default auto code here
-	  motor1.go(.3);  // <-- this tells your new motor to run at 30%
+	  motor1.go(.1);  // <-- this tells your new motor to run at 10%
           break;
       }
     }
 }
 ```
 
-3. Deploy and test
-- If it didn’t work try to determine what is wrong.
-- One thing that could be a problem is the ID of the motor controller
+4. Deploy and test
+	a. Power on the RoboRio
+	b. Connect a USB cable from your laptop to the RoboRio
+	c. Click the WPI logo in VSCode
+	d. Type "deploy" in the box and choose: Deploy Robot Code
+Note: This will deploy your code to the robot
+- If it didn’t work try to determine what is wrong (read the error message in the console)
+- One thing that could be a problem is the ID of the motor controller (see ID the CANSparkMax)	
+	e. Open FRC Driver Station (the software that we use for controlling the robot)
+	f. Make sure someone is holding the motor (not by the shaft)
+	g. Choose "Autonomous" mode
+	h. Click "Enable" to start the robot
+	i. Click "Disable" to stop
+	j. Go into ShuffleBoard/SmartDashboard and change the auto mode. "Enable" again and the motor should go faster.
 
 ### ID the CANSparkMax
 - Connect to a CANSparkMax motor controller using a USB-C cable
 - On the laptop open RevSparkMax Client tool. Connect and set the ID to 4 (the same as we specified in the code)
 - Re-deploy and test
 
-4. Rewrite code we don't like
-- There is a switch/case for the autonomousPeriodic that is complex
+
+### Bonus Round
+- Rewrite code we don't like
+- There is a switch/case for the autonomousPeriodic that is overly complex
 - Let's rewrite it as a simple if/else statement
+- Both ways work and do the same thing, but one is a bit more readable
 
 Robot.init
 ```java
     public void autonomousPeriodic() {
       if (m_autoSelected == kCustomAuto) {
-          // Put custom auto code here
+          motor1.go(.3);  // <-- this tells your new motor to run at 30%
       else if (m_autoSelected == kDefaultAuto) {
-          // Put default auto code here
-	  motor1.go(.3);  // <-- this tells your new motor to run at 30%
+	  motor1.go(.1);  // <-- this tells your new motor to run at 10%
       }
     }
 ```
-- Both ways work and do the same thing, but one is a bit more readable
 
-### Save your code
-- Programming with a team can be difficult. One person's changes may not match with another's.
-- We need way to stay organized, know who made which changes etc.
-- To do this we use git and the website github.com to store our code
+### Clean up
+- Close VSCode
+- Delete this project from the computer C:\Users\fearXX\git\Programming101
 
-1. In VSCode click the version control icon in the left navigation (three circles with some lines connecting them)
-2. Initialize your repository and commit your changes with a brief message like "initial commit" (you might be prompted to save and/or stage your changes)
-3. Committing confirms that you are happy with your changes, but they are only saved locally
-4. To share your changes you must Push them to GitHub
-5. On the laptop open the GitHub Desktop program
-- File>Add local repository
-- Navigate to the folder where your project lives: C:\Users\fearXX\git\Programming101\
-- Repository>Push changes
-- You might need to create a GitHub account to push your changes.
-- After pushing your code is available to share with the world
-- Go ahead and delete this project from the computer to clean up. The code can always be refetched from GitHub.
+### Contingencies
+
+Victor Motor Controller
+- Import Vendor Deps: http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+```java
+private final WPI_VictorSPX motor1;
+motor1 = new WPI_VictorSPX(4);  // <-- 4 means the ID of the motor controller
+```
+
+TalonSRX Motor Controller
+- Import Vendor Deps: http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+```java
+private final WPI_TalonSRX motor1;
+motor1 = new WPI_TalonSRX(4);  // <-- 4 means the ID of the motor controller
+```
