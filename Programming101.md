@@ -61,7 +61,7 @@ private final CANSparkMax motor1;  // Create a variable that will be a reference
 - Poke around, learn the tools
 
 1. Identify the motor in code
-We often use CanSparkMax motor controllers so we will set one up now.
+	- We often use CanSparkMax motor controllers so we will set one up now.
 
 Robot.java (at the top where the other imports are)
 ```java
@@ -69,13 +69,12 @@ Robot.java (at the top where the other imports are)
     import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 ```
 
-- This shows up as red & underlined because it is an error. VSCode is letting you know something is wrong.
-- The problem is that you referenced code libraries (com.revrobotics) that don't exist
+> :memo: **Note:** This shows up as red & underlined because it is an error. VSCode is letting you know something is wrong.<br>
+> The problem is that you referenced code libraries (com.revrobotics) that don't exist
 
 2. Import necessary libraries
-
-- WPI>Manage Vendor Deps>Install new libraries (online)
-- Paste in this url to install the library: https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
+	- WPI>Manage Vendor Deps>Install new libraries (online)
+	- Paste in this url to install the library: https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
 
 3. Set up and use a motor
 
@@ -108,19 +107,19 @@ public class Robot extends TimedRobot {
 ```
 
 4. Deploy and test
-	a. Power on the RoboRio
-	b. Connect a USB cable from your laptop to the RoboRio
-	c. Click the WPI logo in VSCode
-	d. Type "deploy" in the box and choose: Deploy Robot Code
-Note: This will deploy your code to the robot
-- If it didn’t work try to determine what is wrong (read the error message in the console)
-- One thing that could be a problem is the ID of the motor controller (see ID the CANSparkMax)	
-	e. Open FRC Driver Station (the software that we use for controlling the robot)
-	f. Make sure someone is holding the motor (not by the shaft)
-	g. Choose "Autonomous" mode
-	h. Click "Enable" to start the robot
-	i. Click "Disable" to stop
-	j. Go into ShuffleBoard/SmartDashboard and change the auto mode. "Enable" again and the motor should go faster.
+	- Power on the RoboRio
+	- Connect a USB cable from your laptop to the RoboRio
+	- Click the WPI logo in VSCode
+	- Type "deploy" in the box and choose: Deploy Robot Code
+		> :memo: **Note:** This will deploy your code to the robot<br>
+		> If it didn’t work try to determine what is wrong (read the error message in the console)<br>
+		> One thing that could be a problem is the ID of the motor controller (see ID the CANSparkMax)<br>
+	- Open FRC Driver Station (the software that we use for controlling the robot)
+	- Make sure someone is holding the motor (not by the shaft)
+	- Choose "Autonomous" mode
+	- Click "Enable" to start the robot
+	- Click "Disable" to stop
+	- Go into ShuffleBoard/SmartDashboard and change the auto mode. "Enable" again and the motor should go faster.
 
 ### ID the CANSparkMax
 - Connect to a CANSparkMax motor controller using a USB-C cable
