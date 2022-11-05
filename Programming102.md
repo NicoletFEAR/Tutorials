@@ -3,6 +3,7 @@
 ### Goals: 
 - Understanding how human drivers interact with code
 - Build a working drivebase
+- Storing our code with Git
 
 ### Notes
 - First we will import a template drivebase from WPILib
@@ -223,6 +224,23 @@ m_myRobot.arcadeDrive(
       xbox0.getX(GenericHID.Hand.kRight)
     );
 ```
+
+### Save your code
+- Programming with a team can be difficult. One person's changes may not match with another's.
+- We need way to stay organized, know who made which changes etc.
+- To do this we use git and the website github.com to store our code
+
+1. In VSCode click the version control icon in the left navigation (three circles with some lines connecting them)
+2. Initialize your repository and commit your changes with a brief message like "initial commit" (you might be prompted to save and/or stage your changes)
+3. Committing confirms that you are happy with your changes, but they are only saved locally
+4. To share your changes you must Push them to GitHub
+5. On the laptop open the GitHub Desktop program
+- File>Add local repository
+- Navigate to the folder where your project lives: C:\Users\fearXX\git\Programming101\
+- Repository>Push changes
+- You might need to create a GitHub account to push your changes.
+- After pushing your code is available to share with the world
+- Go ahead and delete this project from the computer to clean up. The code can always be refetched from GitHub.
 
 ### Conclusion
 Drive is a simple example and one WPI gives us lots to work with (so any team can get on the field). 
