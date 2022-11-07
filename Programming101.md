@@ -82,7 +82,7 @@ Robot.init
 ```java
 public class Robot extends TimedRobot {
     ...
-    private final CANSparkMax motor1;
+    private static CANSparkMax motor1;
     ...
     public void robotInit() {
     	...
@@ -94,12 +94,12 @@ public class Robot extends TimedRobot {
       switch (m_autoSelected) {
         case kCustomAuto:
           // Put custom auto code here
-	  motor1.go(.3);  // <-- this tells your new motor to run at 30%
+	  motor1.set(.3);  // <-- this tells your new motor to run at 30%
           break;
         case kDefaultAuto:
         default:
           // Put default auto code here
-	  motor1.go(.1);  // <-- this tells your new motor to run at 10%
+	  motor1.set(.1);  // <-- this tells your new motor to run at 10%
           break;
       }
     }
@@ -137,9 +137,9 @@ Robot.init
 ```java
     public void autonomousPeriodic() {
       if (m_autoSelected == kCustomAuto) {
-          motor1.go(.3);  // <-- this tells your new motor to run at 30%
+          motor1.set(.3);  // <-- this tells your new motor to run at 30%
       else if (m_autoSelected == kDefaultAuto) {
-	  motor1.go(.1);  // <-- this tells your new motor to run at 10%
+	  motor1.set(.1);  // <-- this tells your new motor to run at 10%
       }
     }
 ```
