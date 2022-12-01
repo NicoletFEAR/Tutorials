@@ -151,15 +151,17 @@ Robot.init
 ### Contingencies
 
 Victor Motor Controller
-- Import Vendor Deps: http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+- Import Vendor Deps: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
 ```java
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 private final WPI_VictorSPX motor1;
 motor1 = new WPI_VictorSPX(4);  // <-- 4 means the ID of the motor controller
 ```
 
 TalonSRX Motor Controller
-- Import Vendor Deps: http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+- Import Vendor Deps: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
 ```java
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 private final WPI_TalonSRX motor1;
 motor1 = new WPI_TalonSRX(4);  // <-- 4 means the ID of the motor controller
 ```
