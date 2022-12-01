@@ -49,7 +49,7 @@ Add in your new XboxController
 ```java
 public class Robot extends TimedRobot {
   ...
-  private final static XboxController xbox0;
+  private static XboxController xbox0;
   ...
 }
 
@@ -80,11 +80,11 @@ However, the trigger buttons and 2 joysticks on the XboxController supply a floa
 ```java
 public void teleopPeriodic() {
   ...
-  SmartDashboard.putNumber("Left", xbox0.getY(GenericHID.Hand.kLeft));
-  SmartDashboard.putNumber("Right", xbox0.getY(GenericHID.Hand.kRight));
+  SmartDashboard.putNumber("Left", xbox0.getLeftY();
+  SmartDashboard.putNumber("Right", xbox0.getRightY();
   m_myRobot.tankDrive(
-    xbox0.getY(GenericHID.Hand.kLeft), 
-    xbox0.getY(GenericHID.Hand.kRight)
+    xbox0.getLeftY(), 
+    xbox0.getRightY()
     );
   ...
 }
@@ -107,7 +107,7 @@ Use the Install Libraries Online option and then paste in this Vendor Dep url (t
 - This will install a set of libraries that allow you to connect to motor controllers made by CTRE or RevRobotics.
 
 4. If you are using a VictorSPX
-Vendor Dep: http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+Vendor Dep: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
 
 
 
@@ -124,7 +124,7 @@ public void robotInit() {
 ```
 
 4. If you are using a TalonSRX
-Vendor Deps: http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+Vendor Deps: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
 
 - Comment out the old m_myRobot and use this instead:
 ```java
@@ -220,8 +220,8 @@ public void robotInit() {
 - The arcadeDrive function converts these values into leftside/rightside voltage percentages
 ```java
 m_myRobot.arcadeDrive(
-      xbox0.getY(GenericHID.Hand.kRight),
-      xbox0.getX(GenericHID.Hand.kRight)
+      xbox0.getRightY(),
+      xbox0.getRightX()
     );
 ```
 
