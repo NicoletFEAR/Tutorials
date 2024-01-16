@@ -236,7 +236,7 @@
       @Override
       public void outputTelemetry() {}
     ```
- - Last but not least create an enum like shown [above](StateMachine101.md#L144) with all of the states you desire
+ - Last but not least create an enum like shown above (Line 144) with all of the states you desire
  - Now your done!
  - Thats all it takes to create a subsystem state machine 
 
