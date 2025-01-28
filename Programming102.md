@@ -32,7 +32,7 @@
 - Google "WPILib" and then search for DifferentialDrive. There are lots of notes and examples to help you 
 
 ### Modifying their code
-1. They gave us a start in robot_init (but we want to use an XBoxController instead of the joysticks)
+1. They gave us a start in robot_init (but we want to use an `XBoxController` instead of the joysticks)
 
 It is generally a good idea to comment out lines of code you are replacing until you have yours working.
 Commenting in Java is putting two forward slashes in front of your comment. Or you can highlight multiple lines and use CTRL+/ for auto-commenting.
@@ -45,7 +45,7 @@ public void robotInit() {
 }
 ```
 
-Add in your new XboxController
+Add in your `new XboxController`
 ```java
 public class Robot extends TimedRobot {
   ...
@@ -71,9 +71,9 @@ import edu.wpi.first.wpilibj.XboxController;
 ```
 
 
-2. Now use the xbox0 instead of the m_leftStick and m_rightStick
-- Note that if you simply type “xbox0.” VSCode will suggest methods that are supplied by the XboxController class.
-- Both Joystick.getX and xbox0.getX return a float value (i.e. a double precision value between 0.0 and 1.0)
+2. Now use the `xbox0` instead of the `m_leftStick` and `m_rightStick`
+- Note that if you simply type “xbox0.” VSCode will suggest methods that are supplied by the `XboxController` class.
+- Both `Joystick.getX` and `xbox0.getX` return a float value (i.e. a double precision value between 0.0 and 1.0)
 - The XboxController has many input devices. The buttons are all Boolean (either true or false). 
 However, the trigger buttons and 2 joysticks on the XboxController supply a float value.
 
@@ -97,10 +97,16 @@ public void teleopPeriodic() {
 After you deploy your code, make sure you check SmartDashboard to see what it is printing out.
 
 3. Configuring the motor controllers
-- We don't typically use a PWMVictor
+- We don't typically use a `PWMVictor`
 - PWM is a way we can control the motors but we generally use CAN.
 - To use CAN we use identify each motor with a unique ID (using Phoenix Tuner to get/set IDs of CTRE products and RevRobotics Software to get/set ids of SparkMax)
-- The RobotRIO offers many input/output interfaces: Digital (DIO), PWM, Analog, Accelerometer, I2C, CAN.
+- The RobotRIO offers many input/output interfaces:
+  - Digital (DIO): One or Zero, On or Off
+  - PWM: pulse between On and Off very fast
+  - Analog: a continuous range of values
+  - Accelerometer: Data from an Accelerometer
+  - I2C: Devises controlled with [I2C](https://en.wikipedia.org/wiki/I%C2%B2C)
+  - CAN
 - We need to pick a library that interacts with our controllers
 - Add a Vendor Dep by clicking the WPI Icon and choosing Manage Vendor Libraries
 Use the Install Libraries Online option and then paste in this Vendor Dep url (these can be found by searching online)
@@ -108,7 +114,6 @@ Use the Install Libraries Online option and then paste in this Vendor Dep url (t
 
 4. If you are using a VictorSPX
 Vendor Dep: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
-
 
 
 - Comment out the old m_myRobot and use this instead:
@@ -163,8 +168,8 @@ public void robotInit() {
 - If you have motors attached they should rotate with a speed relational to how far you push the joystick from the center.
 
 
-6. Switch to use the example provided in DifferentitalDrive
-- Look at the example code found in DifferentitalDrive
+6. Switch to use the example provided in `DifferentitalDrive`
+- Look at the example code found in `DifferentitalDrive`
 ```java
 */
 public class Robot {
@@ -211,9 +216,10 @@ public void robotInit() {
 
 ```
 
-7. Team 4786 usuallys uses ArcadeDrive.
+7. Team 4786 usuallys uses `ArcadeDrive`.
+
 - These choices are generally made to suit the driver's taste.
-- Try to figure out how to use ArcadeDrive on your own. Spoiler alert -- the answer is just below.
+- Try to figure out how to use `ArcadeDrive` on your own. Spoiler alert -- the answer is just below.
 
 - Arcade Drive takes two variables: speed (forward/backward) and rotation (turn amount).
 - In this example we use the joystick Y-axis for speed (forward and backward) and the X-axis for rotation (left and right).
