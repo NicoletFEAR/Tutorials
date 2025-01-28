@@ -6,12 +6,12 @@
 
 ### Understand parts of robot
 - RoboRIO - onboard computer. It runs code that we write and tells devices how to behave
-- Motor Controller - dictates when to send voltage to motor
+- Motor Controller - dictates when to send voltage to motor as well as how much
 - Electric Motor - many different types are available
-- CAN wiring - nervous system for hardware that identifies devices and communicates with them
-- Laptop
-- VSCode - programming IDE, gives hints about writing code correctly
-- Java - the programming language Team 4786 uses
+- CAN wiring - "nervous system" for hardware that identifies devices and communicates with them
+- Laptop - The folding, all-in-one computors that we use to write code
+- VSCode - programming IDE (Integrated Development Environment), gives hints about writing code correctly as we write
+- [Java](https://dev.java/) - the programming language Team 4786 uses.
 - WPILib - FRC libraries to make it easy to work with devices
 
 ### Getting acquainted with WPILib
@@ -22,36 +22,41 @@
 	- Select a new project folder: "C:\Users\fearXX\git
 	- Project Name: "Programming 101"
 	- Team Number: 4786
-- You should see a project on the left side
+- You should see a project on the left side. This pannel shows files and folders.
 - Navigate into src/main/java/frc/robot
 - Start exploring
 - Robot.java is where the action begins
-- Control+Click TimedRobot to open the library that is behind our project and appreciate how much is already done for you
-- Code is just a tool. You have to learn to use the tool and this can a complicated tool that takes time to understand
+- Control+Click `TimedRobot` to open the library that is behind our project and appreciate how much is already done for you
+- Code is just a tool. You have to learn to use the tool, and this can a complicated tool that takes time to understand
 - Java notes
-	- Java is "strongly typed", this means that we have to declare what "type" each variable is (String, Double, Boolean)
+	- Java is "strongly typed", this means that we have to declare what "type" each variable is (String, Double, Boolean). You must specificly say if a varable needs to change type. 
 	- Every statement must end in a semi-colon. That is how Java knows when you have completed your thought.
-	- Variables can have qualifiers (final = won't change, static = same everywhere, public = available everywhere, private = only available to it's parent class) 
+	- Variables can have qualifiers (final = won't change, static = same everywhere, public = available everywhere, private = only available to it's parent class)
 ```java
 private String my_variable = "Hello"; // You can put comments in to explain yourself
 public Double rampRate = 4.6;  // Comments get ignored by Java so they don't need semicolons
 private final CANSparkMax motor1;  // Create a variable that will be a reference to an electric motor
+/*              ┗ Here we are using a object, or a instence of a class, as the type
+This is a block/multiline comment. Explenations about what a specific function or class do are normaly like this
+*/
 
 ```
 
 ### Understanding what robots do
 - Looking at the Robot.java file
 	- robotInit - code that runs once, when the robot starts
-	- robotPeriodic - code that runs every 20ms (50 times a second), when the robot is Enabled
+	- robotPeriodic - code that runs every 20ms (50 times a second), as long as the robot is Enabled
 	- autonomousInit - code that runs once, when Autonomous mode begins
-	- autonomousPeriodic - code that runs every 20ms, while the robot is Enabled in Autonomous Mode
+	- autonomousPeriodic - code that runs every 20ms while the robot is in Autonomous Mode
 	- teleopInit - code that runs once, when the Teleop (Driver controlled) mode begins
-	- teleopPeriodic - code that runs every 20ms, while the robot is Enabled in Teleop Mode
+	- teleopPeriodic - code that runs every 20ms while the robot is Enabled in Teleop Mode
+
 - What can we do with programming on a robot?
 	- Control motors -- turn them on/off or adjust speed by specifying an amount of power (voltage)
 	- Control solenoids -- make a pistons go out or in
 	- Read sensors -- encoders tell us how many times a motor has turned, ultrasonic tell us how far we are from something solid
 	- Send data/video back to driver’s station
+	- Get controls from the driver's  station
 	- Read data from a camera to find targets and judge distance from targets
 
 ### Today's activity
@@ -68,12 +73,14 @@ Robot.java (at the top where the other imports are)
     import com.revrobotics.CANSparkMax;
     import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 ```
+This allows us to use these functions and classes from another project in ours.
 
-> :memo: **Note:** This shows up as red & underlined because it is an error. VSCode is letting you know something is wrong.<br>
-> The problem is that you referenced code libraries (com.revrobotics) that don't exist
+> [!NOTE]  This shows up as red & underlined because it is an error. VSCode is letting you know something is wrong.<br>
+> The problem is that you referenced code libraries (com.revrobotics) that don't exist.
+> You can see info about a error by hovering over the underlined text.
 
 2. Import necessary libraries
-	- WPI>Manage Vendor Deps>Install new libraries (online)
+	- WPI > Manage Vendor Deps > Install new libraries (online)
 	- Paste in this url to install the library: https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
 
 3. Set up and use a motor
@@ -94,12 +101,12 @@ public class Robot extends TimedRobot {
       switch (m_autoSelected) {
         case kCustomAuto:
           // Put custom auto code here
-	  motor1.set(.3);  // <-- this tells your new motor to run at 30%
+	      motor1.set(.3);  // <-- this tells your new motor to run at 30%
           break;
         case kDefaultAuto:
         default:
           // Put default auto code here
-	  motor1.set(.1);  // <-- this tells your new motor to run at 10%
+	      motor1.set(.1);  // <-- this tells your new motor to run at 10%
           break;
       }
     }
@@ -111,9 +118,9 @@ public class Robot extends TimedRobot {
 	- Connect a USB cable from your laptop to the RoboRio
 	- Click the WPI logo in VSCode
 	- Type "deploy" in the box and choose: Deploy Robot Code
-		> :memo: **Note:** This will deploy your code to the robot<br>
+		> [!NOTE] This will deploy your code to the robot<br>
 		> If it didn’t work try to determine what is wrong (read the error message in the console)<br>
-		> One thing that could be a problem is the ID of the motor controller (see ID the CANSparkMax)<br>
+		> One thing that could be a problem is the ID of the motor controller (see section: "ID the CANSparkMax")<br>
 	- Open FRC Driver Station (the software that we use for controlling the robot)
 	- Make sure someone is holding the motor (not by the shaft)
 	- Choose "Autonomous" mode
@@ -139,7 +146,7 @@ Robot.init
       if (m_autoSelected == kCustomAuto) {
           motor1.set(.3);  // <-- this tells your new motor to run at 30%
       else if (m_autoSelected == kDefaultAuto) {
-	  motor1.set(.1);  // <-- this tells your new motor to run at 10%
+	      motor1.set(.1);  // <-- this tells your new motor to run at 10%
       }
     }
 ```
