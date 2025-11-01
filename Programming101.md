@@ -80,6 +80,7 @@ public double rampRate = 4.6;
 public boolean isFull = true;
 private int bottomLeftMotorId = 22; // Those who know 22
 ```
+- ##### What is the difference between these variable types?
             - myVariable is a String (sequence of text) and private (only code in the same class can see it)
             - rampRate is a double (real number) and public (code in any class can see it)
             - isFull is a boolean (true or false value) and public
@@ -122,7 +123,7 @@ Robot.java (at the top where the other imports are)
 	- WPI>Manage Vendor Deps>Install new libraries (online)
 	- Paste in this url to install the library: https://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
 
-3. Set up and use a motor
+3. Set up and use a motor(Copy and Paste the following code into Robot.init)
 
 Robot.init
 ```java
