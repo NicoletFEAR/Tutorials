@@ -80,7 +80,7 @@ public double rampRate = 4.6;
 public boolean isFull = true;
 private int bottomLeftMotorId = 22; // Those who know 22
 ```
-- ##### What is the difference between these variable types?
+- #### What is the difference between these variable types?
 - myVariable is a String (sequence of text) and private (only code in the same class can see it)
 - rampRate is a double (real number) and public (code in any class can see it)
 - isFull is a boolean (true or false value) and public
