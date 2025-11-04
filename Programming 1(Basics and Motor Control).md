@@ -1,4 +1,4 @@
-# Programming 1 (Motor Control)
+# Programming 1 (Basics and Motor Control)
 
 ### Goals
 - basic understanding of programming an FRC robot
@@ -81,10 +81,10 @@ public boolean isFull = true;
 private int bottomLeftMotorId = 22; // Those who know 22
 ```
 - ##### What is the difference between these variable types?
-            - myVariable is a String (sequence of text) and private (only code in the same class can see it)
-            - rampRate is a double (real number) and public (code in any class can see it)
-            - isFull is a boolean (true or false value) and public
-            - bottomLeftMotorId is an int (integer) and private
+- myVariable is a String (sequence of text) and private (only code in the same class can see it)
+- rampRate is a double (real number) and public (code in any class can see it)
+- isFull is a boolean (true or false value) and public
+- bottomLeftMotorId is an int (integer) and private
 
 ### Understanding what robots do
 - Some methods in the Robot class
