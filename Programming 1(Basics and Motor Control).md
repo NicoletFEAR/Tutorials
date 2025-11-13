@@ -83,10 +83,10 @@ public boolean isFull = true; // Everything after the slashes is ignored by Java
 private int bottomLeftMotorId = 22;
 ```
 - #### What is the difference between these variable types?
-- myVariable is a String (sequence of text) and private (only code in the same class can see it)
-- rampRate is a double (real number) and public (code in any class can see it)
-- isFull is a boolean (true or false value) and public
-- bottomLeftMotorId is an int (integer) and private
+	- myVariable is a String (sequence of text) and private (only code in the same class can see it)
+	- rampRate is a double (real number) and public (code in any class can see it)
+	- isFull is a boolean (true or false value) and public
+	- bottomLeftMotorId is an int (integer) and private
 
 ### Understanding what robots do
 - Robot states
