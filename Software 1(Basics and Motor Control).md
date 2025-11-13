@@ -1,4 +1,4 @@
-# Programming 1 (Basics and Motor Control)
+# Software 1 (Basics and Motor Control)
 
 ### Goals
 - basic understanding of programming an FRC robot
@@ -61,7 +61,7 @@
 	- Create a new project
 	- Select a project type > Template > Java > Timed Robot
 	- Select a new project folder: "C:\Users\fearXX\git
-	- Project Name: "Programming1"
+	- Project Name: "Software1"
 	- Team Number: 4786
 - You should see a project on the left side
 - Navigate into src/main/java/frc/robot
@@ -198,6 +198,6 @@ Robot.java
 
 ### Clean up
 - Close VSCode
-- Delete this project from the computer C:\Users\fearXX\git\Programming1
+- Delete this project from the computer C:\Users\fearXX\git\Software1
 
 
