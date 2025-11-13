@@ -60,7 +60,7 @@
 - Click on WPI Logo (upper right) to open a menu
 	- Create a new project
 	- Select a project type > Template > Java > Timed Robot
-	- Select a new project folder: "C:\Users\fearXX\git
+	- Select the folder for the project: "C:\Users\fearXX\git
 	- Project Name: "Software1"
 	- Team Number: 4786
 - You should see a project on the left side
