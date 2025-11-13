@@ -95,7 +95,6 @@ private int bottomLeftMotorId = 22;
                         - Teleoperated (often shortened to Teleop) - This is when the robot can be controlled by the drivers
             - Disabled - When the robot is disabled, it’s still on but it can’t do anything
 - Some methods in the Robot class
-	- robotInit - Code that you put in this method runs only once, when the robot starts
 	- robotPeriodic - Code in this method runs every 20 milliseconds (50 times a second), when the robot is Enabled
 	- autonomousInit - Code in this method runs once, when the robot goes into Auto
 	- autonomousPeriodic - Code in this method runs every 20 milliseconds, while the robot is Enabled in Auto
@@ -130,15 +129,15 @@ Robot.java (at the top where the other imports are)
 	- Click the WPILib logo on the left side of the screen
 	- Find the REVRobotics library and click “Install”
 
-3. Set up and use a motor(Copy and Paste the following code into Robot.init)
+3. Set up and use a motor(Copy and Paste the following code into Robot.java)
 
-Robot.init
+Robot.java
 ```java
 public class Robot extends TimedRobot {
     ...
     private SparkMax motor1;
     ...
-    public void robotInit() {
+    public Robot() {
     	...
         motor1 = new SparkMax(4, MotorType.kBrushless);  // <-- 4 means the ID of the motor controller
     }
@@ -186,7 +185,7 @@ public class Robot extends TimedRobot {
 - Let's rewrite it as a simple if/else statement
 - Both ways work and do the same thing, but one is a bit more readable
 
-Robot.init
+Robot.java
 ```java
     public void autonomousPeriodic() {
       if (m_autoSelected == kCustomAuto) {
@@ -200,3 +199,5 @@ Robot.init
 ### Clean up
 - Close VSCode
 - Delete this project from the computer C:\Users\fearXX\git\Programming1
+
+
